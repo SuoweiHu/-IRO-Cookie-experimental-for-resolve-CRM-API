@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cookie Reader</title>
+    </head>
+
+
+    <body>
+        <button onclick="toggle_utility()">Toggle Cookie Utility</button>
+        <div id="cookie_utility"
+            style="display:none; flex-direction:column; justify-content: center; padding: 30px; width: 300px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+            <h2>Utility: Add Cookie</h2>
+            <form onsubmit="event.preventDefault(); write_cookie();">
+                <label for="cookie_key_write">Cookie Name / Cookie ID</label> <br>
+                <input id="cookie_key_write" type="text" value="resolve-crm-username"></input><br><br>
+                <label for="cookie_val_write">Cookie Value</label> <br>
+                <input id="cookie_val_write" type="text"></input><br><br>
+                <button type="submit">Submit</button>
+            </form>
+            <br>
+            <h2>Utility: Read Cookie</h2>
+            <form onsubmit="event.preventDefault(); read_cookie();">
+                <label for="cookie_key_read">Cookie Name / Cookie ID</label> <br>
+                <input id="cookie_key_read" type="text" value="resolve-crm-username"></input><br>
+                <br><button type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+
+
+    <!-- Cookie Utility Functions -->
+    <script>
+        function getCookieValue(key) {
+            const cookies = document.cookie.split("; ");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split("=");
+                const cookieKey = decodeURIComponent(cookie[0]);
+                const cookieValue = decodeURIComponent(cookie[1]);
+                if (cookieKey === key) { return cookieValue; }
+            }
+            return null; // Return null if the cookie key is not found
+        }
+        function setCookie(key, value) {
+            const encodedKey = encodeURIComponent(key);
+            const encodedValue = encodeURIComponent(value);
+            const cookieString = encodedKey + "=" + encodedValue;
+            document.cookie = cookieString;
+        }
+        function read_cookie() {
+            var cookie_key = document.getElementById("cookie_key_read").value;
+            alert(`Cookie of [key=${cookie_key}] have [value=${getCookieValue(cookie_key)}] !`);
+        }
+        function write_cookie() {
+            var cookie_key = document.getElementById("cookie_key_write").value;
+            var cookie_val = document.getElementById("cookie_val_write").value;
+            alert(`Cookie of [key=${cookie_key}], [value=${cookie_val}] is set !`);
+            setCookie(cookie_key, cookie_val);
+        }
+        function toggle_utility() {
+            if (document.getElementById("cookie_utility").style.display == "none") {
+                document.getElementById("cookie_utility").style.display = "flex";
+            } else {
+                document.getElementById("cookie_utility").style.display = "none";
+            }
+        }
+    </script>
+
+</html>
