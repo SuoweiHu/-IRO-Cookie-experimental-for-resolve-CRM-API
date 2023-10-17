@@ -9,9 +9,15 @@
 
 
     <body>
-        <button onclick="toggle_utility()">Toggle Cookie Utility</button>
+
+        <!-- Link -->
+        <a href="https://www.google.com">www.google.com</a>
+
+
+        <!-- Cookie Utility -->
+        <button style="position: absolute; right: 10px; bottom: 10px;" onclick="toggle_utility()">Toggle Cookie Utility</button>
         <div id="cookie_utility"
-            style="display:none; flex-direction:column; justify-content: center; padding: 30px; width: 300px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+            style="z-index: 999; border: 1px solid black; border-radius: 5px; display:none; flex-direction:column; justify-content: center; padding: 30px; width: 300px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
             <h2>Utility: Add Cookie</h2>
             <form onsubmit="event.preventDefault(); write_cookie();">
                 <label for="cookie_key_write">Cookie Name / Cookie ID</label> <br>
