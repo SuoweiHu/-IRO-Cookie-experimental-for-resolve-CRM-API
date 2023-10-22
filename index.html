@@ -47,6 +47,10 @@
                 <input id="cookie_key_write" type="text" value="resolve-crm-username"></input><br><br>
                 <label for="cookie_val_write">Cookie Value</label> <br>
                 <input id="cookie_val_write" type="text"></input><br><br>
+                <label for="cookie_expiration">Expiration (days)</label> <br>
+                <input id="cookie_expiration" type="text"></input><br><br>
+                <label for="cookie_domain">Domain</label> <br>
+                <input id="cookie_domain" type="text"></input><br><br>
                 <button type="submit">Submit</button>
             </form>
             <br>
@@ -90,6 +94,18 @@
             // const cookieString = encodedKey + "=" + encodedValue+ ";";
             document.cookie = cookieString;
         }
+        function setCookie(key, value, expire_days, domain) {
+            const date_obj     = new Date(); date_obj.setTime(date_obj.getTime() + (expire_days*24*60*60*1000));
+            const expires_str  = "expires="+ date_obj.toUTCString();
+            const path_str     = "path=/";
+            const encodedKey   = encodeURIComponent(key);
+            const encodedValue = encodeURIComponent(value);
+            const domain_str   = "domain="+domain;
+            const keyVal_str   = encodedKey + "=" + encodedValue;
+            const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";" + domain_str + ";" ;
+            // const cookieString = encodedKey + "=" + encodedValue+ ";";
+            document.cookie = cookieString;
+        }
         function clear_cookie_withUtility(){
             // Get all cookies
             var cookies = document.cookie.split(";");
@@ -107,10 +123,13 @@
             alert(`Cookie of [key=${cookie_key}] have [value=${getCookieValue(cookie_key)}] !`);
         }
         function write_cookie_withUtility() {
-            var cookie_key = document.getElementById("cookie_key_write").value;
-            var cookie_val = document.getElementById("cookie_val_write").value;
+            var cookie_key        = document.getElementById("cookie_key_write").value;
+            var cookie_val        = document.getElementById("cookie_val_write").value;
+            var cookie_expiration = document.getElementById("cookie_expiration").value;
+            var cookie_domain     = document.getElementById("cookie_domain").value;
             // alert(`Cookie of [key=${cookie_key}], [value=${cookie_val}] is set !`);
-            setCookie(cookie_key, cookie_val);
+            setCookie(cookie_key, cookie_val, cookie_expiration, cookie_domain);
+            update_url();
         }
         function toggle_utility() {
             if (document.getElementById("cookie_utility").style.display == "none") {
