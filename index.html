@@ -21,12 +21,16 @@
         <button style="position: absolute; LEFT: 10px; bottom: 10px;" onclick="toggle_login()">Login</button>
         <div id="login_panel"
             style="z-index: -1; border: 1px solid black; border-radius: 5px; display:flex; flex-direction:column; justify-content: center; padding: 30px; width: 300px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); left: unset; top: unset; transform: translate(0%,0%); bottom: 40px; left: 10px;">
-            <h2>User Login</h2>
+            <h2>Log-in</h2>
             <form onsubmit="event.preventDefault(); write_cookie_userLogin();">
                 <label for="username">Username</label> <br>
                 <input id= "username" type="text" value="Account-1"></input><br><br>
                 <label for="password">Password</label> <br>
                 <input id= "password" type="text" value="********"></input><br><br>
+                <button type="submit">Submit</button>
+            </form>
+            <h2>Log-out</h2>
+            <form onsubmit="event.preventDefault(); clear_cookie_withUtility();">
                 <button type="submit">Submit</button>
             </form>
             <br>
@@ -52,6 +56,11 @@
                 <input id="cookie_key_read" type="text" value="resolve-crm-username"></input><br>
                 <br><button type="submit">Submit</button>
             </form>
+            <br>
+            <h2>Utility: Clear Cookie</h2>
+            <form onsubmit="event.preventDefault(); clear_cookie_withUtility();">
+                <br><button type="submit">Submit</button>
+            </form>
         </div>
     </body>
 
@@ -69,10 +78,26 @@
             return null; // Return null if the cookie key is not found
         }
         function setCookie(key, value) {
-            const encodedKey = encodeURIComponent(key);
+            const expire_days  = 1; //cookie expires within 1 day
+            const date_obj     = new Date(); date_obj.setTime(date_obj.getTime() + (expire_days*24*60*60*1000));
+            const expires_str  = "expires="+ date_obj.toUTCString();
+            const encodedKey   = encodeURIComponent(key);
             const encodedValue = encodeURIComponent(value);
-            const cookieString = encodedKey + "=" + encodedValue;
+            const cookieString = encodedKey + "=" + encodedValue+ ";" + expires_str + ";path=/";
+            // const cookieString = encodedKey + "=" + encodedValue+ ";";
             document.cookie = cookieString;
+        }
+        function clear_cookie_withUtility(){
+            // Get all cookies
+            var cookies = document.cookie.split(";");
+            // Loop through each cookie and delete it by setting an expiry date in the past
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            update_url();
         }
         function read_cookie_withUtility() {
             var cookie_key = document.getElementById("cookie_key_read").value;
@@ -108,10 +133,20 @@
             var username   = getCookieValue("resolve-crm-username");
             var link       = document.getElementById("link-to-webfrom");
             var link_help  = document.getElementById("link-to-webfrom-help");
-            link.href      = `http://localhost:8888/update_user_details/${username}`;
-            link.innerHTML = `www.intranet.iro/webform/${username}`;
-            link_help.innerHTML = `Link to modify the content`;
+            if(username == null){
+                link.href = "#";
+                link.innerHTML = "";
+                link_help.innerHTML = "Please login first via the button on the bottom left";
+            } else {
+                link.href      = `http://localhost:8888/update_user_details/${username}`;
+                link.innerHTML = `www.intranet.iro/webform/${username}`;
+                link_help.innerHTML = `Link to modify the content`;
+            }
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            update_url();
+        });
+
     </script>
 
 </html>
