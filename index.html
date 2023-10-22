@@ -88,13 +88,13 @@
             const path_str     = "path=/";
             const encodedKey   = encodeURIComponent(key);
             const encodedValue = encodeURIComponent(value);
-            const domain_str   = "domain=resolve-api-mockup-portal.simon-hu.org"
             const keyVal_str   = encodedKey + "=" + encodedValue;
+            // const domain_str   = "domain=resolve-api-mockup-portal.simon-hu.org"
             // const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";" + domain_str + ";" ;
-            const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";";
+            const cookieString = keyVal_str + ";";
             document.cookie = cookieString;
         }
-        function setCookie(key, value, expire_days, domain) {
+        function setCookie_detailed(key, value, expire_days, domain) {
             const date_obj     = new Date(); date_obj.setTime(date_obj.getTime() + (expire_days*24*60*60*1000));
             const expires_str  = "expires="+ date_obj.toUTCString();
             const path_str     = "path=/";
@@ -128,7 +128,7 @@
             var cookie_expiration = document.getElementById("cookie_expiration").value;
             var cookie_domain     = document.getElementById("cookie_domain").value;
             // alert(`Cookie of [key=${cookie_key}], [value=${cookie_val}] is set !`);
-            setCookie(cookie_key, cookie_val, cookie_expiration, cookie_domain);
+            setCookie_detailed(cookie_key, cookie_val, cookie_expiration, cookie_domain);
             update_url();
         }
         function toggle_utility() {
