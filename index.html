@@ -81,9 +81,12 @@
             const expire_days  = 1; //cookie expires within 1 day
             const date_obj     = new Date(); date_obj.setTime(date_obj.getTime() + (expire_days*24*60*60*1000));
             const expires_str  = "expires="+ date_obj.toUTCString();
+            const path_str     = "path=/";
             const encodedKey   = encodeURIComponent(key);
             const encodedValue = encodeURIComponent(value);
-            const cookieString = encodedKey + "=" + encodedValue+ ";" + expires_str + ";path=/";
+            const domain_str   = "domain=resolve-api-mockup-portal.simon-hu.org"
+            const keyVal_str   = encodedKey + "=" + encodedValue;
+            const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";" + domain_str + ";" ;
             // const cookieString = encodedKey + "=" + encodedValue+ ";";
             document.cookie = cookieString;
         }
