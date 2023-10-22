@@ -90,8 +90,8 @@
             const encodedValue = encodeURIComponent(value);
             const domain_str   = "domain=resolve-api-mockup-portal.simon-hu.org"
             const keyVal_str   = encodedKey + "=" + encodedValue;
-            const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";" + domain_str + ";" ;
-            // const cookieString = encodedKey + "=" + encodedValue+ ";";
+            // const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";" + domain_str + ";" ;
+            const cookieString = keyVal_str + ";" + expires_str + ";" + path_str + ";";
             document.cookie = cookieString;
         }
         function setCookie(key, value, expire_days, domain) {
