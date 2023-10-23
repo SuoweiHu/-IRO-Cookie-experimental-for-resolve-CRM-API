@@ -12,8 +12,8 @@
 
         <!-- Link -->
         <div style="left: 50%; top: 50%; transform: translate(-50%, -50%); position: absolute;" >
-            <div id="link-to-webfrom-help" style="display: inline-block;">Please login first via link: </div>
-            <a id="link-to-webfrom" href="#">www.portal.iro/login</a>
+            <div id="link-to-webform-help" style="display: inline-block;">Please login first via link: </div>
+            <a id="link-to-webform" href="#">www.portal.iro/login</a>
         </div>
 
 
@@ -153,16 +153,16 @@
         }
         function update_url(){
             var username   = getCookieValue("resolve-crm-username");
-            var link       = document.getElementById("link-to-webfrom");
-            var link_help  = document.getElementById("link-to-webfrom-help");
+            var link       = document.getElementById("link-to-webform");
+            var link_help  = document.getElementById("link-to-webform-help");
             if(username == null){
                 link.href = "#";
                 link.innerHTML = "";
                 link_help.innerHTML = "Please login first via the button on the bottom left";
             } else {
-                link.href      = `http://localhost:8888/update_user_details/${username}`;
-                link.innerHTML = `www.intranet.iro/webform/${username}`;
-                link_help.innerHTML = `Link to modify the content`;
+                link.href      = `https://proxy.simon-hu.org/intranet-webform`;
+                link.innerHTML = `https://proxy.simon-hu.org/intranet-webform`;
+                link_help.innerHTML = `Link to the intranet webform:`;
             }
         }
         document.addEventListener("DOMContentLoaded", function() {
